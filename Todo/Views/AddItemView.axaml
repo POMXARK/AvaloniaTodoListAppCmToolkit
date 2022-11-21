@@ -5,8 +5,16 @@
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="300"
              x:Class="Todo.Views.AddItemView">
   <DockPanel>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Cancel}">Cancel</Button>
-    <Button DockPanel.Dock="Bottom" Command="{Binding Ok}">OK</Button>
+    <Button 
+      DockPanel.Dock="Bottom" 
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+      Command="{Binding Cancel}">Cancel</Button>
+    <Button 
+      DockPanel.Dock="Bottom" 
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"      
+      Command="{Binding Ok}">OK</Button>
     <TextBox AcceptsReturn="False"
              Text="{Binding Description}"
              Watermark="Enter your TODO"/>
