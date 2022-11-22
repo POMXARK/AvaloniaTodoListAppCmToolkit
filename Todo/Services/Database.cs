@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Avalonia.Markup.Xaml.Templates;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Todo.Models;
 
 namespace Todo.Services
@@ -9,7 +12,14 @@ namespace Todo.Services
     public class Database : DbContext
     {
         //TODO: EF
-        public IEnumerable<TodoItem> GetItems() => TodoItems;
+        public async Task<IEnumerable<TodoItem>> GetItemsAsync() => await TodoItems.AsNoTracking().ToListAsync();
+
+        public async Task SaveAsync(TodoItem todo)
+        {
+            TodoItems.Attach(todo);
+            Thread.Sleep(2500); // test async
+            await SaveChangesAsync();
+        }
 
         public DbSet<TodoItem> TodoItems { get; set; }
 

@@ -2,8 +2,8 @@
 
 using ReactiveUI.Fody.Helpers;
 using System;
-using System.Diagnostics;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Todo.Models;
 using Todo.Services;
 
@@ -14,14 +14,17 @@ namespace Todo.ViewModels
     /// </summary>
     public partial class MainWindowViewModel : ViewModelBase
     {
+        private Database _db;
+
         // реактивное ( автообновляемое ) свойство , привязано как контекст 
         [Reactive] ViewModelBase Content { get; set; }
 
         // использует подключение аргумента из App.cs, можно заменить на DI 
         public MainWindowViewModel(Database db)
         {
+            _db = db;
             // присвоение одного свойства другому с получением списка данных из "базы"
-            Content = List = new TodoListViewModel(db.GetItems());
+            Content = List = new TodoListViewModel(db.GetItemsAsync().Result);
         }
 
         // свойство с получением данных из другой VM
@@ -41,12 +44,13 @@ namespace Todo.ViewModels
                 // взять один
                 .Take(1)
                 // подписывается на изменения TodoItem 
-                .Subscribe(model =>
+                .Subscribe(async model =>
                 {
                     if (model != null)
                     {
                         // получить список из внешней модели и дополнить
                         List.Items.Add(model);
+                        await Task.Run(() => _db.SaveAsync(model));
                     }
                     // перезаписать контент
                     Content = List;
