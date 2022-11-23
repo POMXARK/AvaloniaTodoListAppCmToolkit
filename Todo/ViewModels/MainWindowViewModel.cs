@@ -49,7 +49,7 @@ namespace Todo.ViewModels
                     if (model != null)
                     {
                         // получить список из внешней модели и дополнить
-                        List.Items.Add(model);
+                        List.TodoItems.Add(model);
                         await Task.Run(() => _db.SaveAsync(model));
                     }
                     // перезаписать контент

@@ -1,4 +1,6 @@
-﻿namespace Todo.Models
+﻿using ReactiveUI.Fody.Helpers;
+
+namespace Todo.Models
 {
     public class TodoItem
     {

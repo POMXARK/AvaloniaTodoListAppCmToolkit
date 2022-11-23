@@ -11,14 +11,17 @@
             Command="{Binding $parent[Window].DataContext.AddItem}">
       Add an item
     </Button>
-    <ItemsControl Items="{Binding Items}">
-      <ItemsControl.ItemTemplate>
+    <ListBox  Items="{Binding TodoItems}">     
+      <ListBox.ItemTemplate>
         <DataTemplate>
           <CheckBox Margin="4"
                     IsChecked="{Binding IsChecked}"
-                    Content="{Binding Description}"/>
+                    Content="{Binding Description}"
+                    Command="{Binding $parent[UserControl].DataContext.UpdateItemCommand}"
+                    CommandParameter="{Binding}"
+                    />
         </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+      </ListBox.ItemTemplate>      
+    </ListBox>
   </DockPanel>    
 </UserControl>
