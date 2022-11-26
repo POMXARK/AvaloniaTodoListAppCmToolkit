@@ -4,24 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="400"
              x:Class="Todo.Views.TodoListView">
-  <DockPanel>
-    <Button DockPanel.Dock="Bottom" 
-            HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Center"
-            Command="{Binding $parent[Window].DataContext.AddItem}">
-      Add an item
-    </Button>
-    <ListBox  Items="{Binding TodoItems}">     
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <CheckBox Margin="4"
-                    IsChecked="{Binding IsChecked}"
-                    Content="{Binding Description}"
-                    Command="{Binding $parent[UserControl].DataContext.UpdateItemCommand}"
-                    CommandParameter="{Binding}"
+  <StackPanel>
+    <DockPanel>
+      <Button DockPanel.Dock="Bottom"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              Command="{Binding $parent[Window].DataContext.AddItem}">
+        Add an item
+      </Button>
+      <ListBox  Items="{Binding TodoItems}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <CheckBox Margin="4"
+                      IsChecked="{Binding IsChecked}"
+                      Content="{Binding Description}"
+                      Command="{Binding $parent[UserControl].DataContext.UpdateItemCommand}"
+                      CommandParameter="{Binding}"
                     />
-        </DataTemplate>
-      </ListBox.ItemTemplate>      
-    </ListBox>
-  </DockPanel>    
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </DockPanel>
+    <Grid>
+      <ProgressBar x:Name="pbar" Value="60" Height="20"/>
+      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ElementName=pbar, Path=Value, StringFormat={}{0:0}%}"/>
+    </Grid>
+  </StackPanel>
 </UserControl>
